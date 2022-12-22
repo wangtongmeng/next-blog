@@ -1,7 +1,7 @@
 import type { NextPage } from 'next';
 import { ReactNode } from 'react';
-import Footer from '../Footer';
-import Navbar from '../Navbar';
+import Footer from 'components/Footer';
+import Navbar from 'components/Navbar';
 
 interface IProps {
   children: ReactNode;
