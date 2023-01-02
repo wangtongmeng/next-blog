@@ -10,7 +10,7 @@ interface IProps {
 
 const Login = (props: IProps) => {
   console.log(props);
-  const { isShow = false } = props;
+  const { isShow = false, onClose } = props;
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
 
   const [form, setForm] = useState({
@@ -41,7 +41,21 @@ const Login = (props: IProps) => {
         }
       });
   };
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    request
+      .post('/api/user/login', {
+        ...form,
+        identity_type: 'phone', // 登录认证方式 手机验证码的方式
+      })
+      .then((res: any) => {
+        if (res?.code === 0) {
+          // 成功
+          onClose();
+        } else {
+          message.error(res?.msg || '未知错误');
+        }
+      });
+  };
   const handleOAuthGithub = () => {};
   // ChangeEvent<HTMLInputElement>
   const handleFormChange = (e: ChangeEvent<HTMLInputElement>) => {
