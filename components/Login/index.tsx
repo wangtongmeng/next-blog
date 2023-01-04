@@ -2,6 +2,7 @@ import { message } from 'antd';
 import CountDown from 'components/CountDown';
 import { ChangeEvent, useState } from 'react';
 import request from 'service/fetch';
+import { useStore } from 'store';
 import styles from './index.module.scss';
 interface IProps {
   isShow: boolean;
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 const Login = (props: IProps) => {
+  const store = useStore();
   console.log(props);
   const { isShow = false, onClose } = props;
   const [isShowVerifyCode, setIsShowVerifyCode] = useState(false);
@@ -49,7 +51,8 @@ const Login = (props: IProps) => {
       })
       .then((res: any) => {
         if (res?.code === 0) {
-          // 成功
+          // 登录成功
+          store.user.setUserInfo(res?.data);
           onClose();
         } else {
           message.error(res?.msg || '未知错误');

@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.8.0",
     "@next/font": "13.0.7",
     "@types/node": "18.11.17",
     "@types/react": "18.0.26",
@@ -20,6 +21,8 @@
     "iron-session": "^6.3.1",
     "js-base64": "^3.7.3",
     "md5": "^2.3.0",
+    "mobx": "^6.7.0",
+    "mobx-react-lite": "^3.4.0",
     "mysql2": "^2.3.3",
     "next": "13.0.7",
     "react": "18.2.0",
