@@ -1,10 +1,12 @@
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
 import { Avatar, Button, Dropdown, Menu } from 'antd';
 import Login from 'components/Login';
+import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import request from 'service/fetch';
 import { useStore } from 'store';
 import { navs } from './config';
 import styles from './index.module.scss';
@@ -12,7 +14,7 @@ import styles from './index.module.scss';
 const Navbar: NextPage = () => {
   const store = useStore();
   const { userId, avatar } = store.user.userInfo;
-  const { pathname } = useRouter();
+  const { pathname, push } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
   const handleGotoEditorPage = () => {};
   const handleLogin = () => {
@@ -21,15 +23,25 @@ const Navbar: NextPage = () => {
   const handleClose = () => {
     setIsShowLogin(false);
   };
+  const handleGotoPersonalPage = () => {
+    push(`/user/${userId}`);
+  };
+  const handleLogout = () => {
+    request.post('/api/user/logout').then((res: any) => {
+      if (res?.code === 0) {
+        store.user.setUserInfo({});
+      }
+    });
+  };
   const renderDropDownMenu = () => {
     return (
       <Menu>
         <Menu.Item>
-          <HomeOutlined />
+          <HomeOutlined onClick={handleGotoPersonalPage} />
           &nbsp; 个人主页
         </Menu.Item>
         <Menu.Item>
-          <LoginOutlined />
+          <LoginOutlined onClick={handleLogout} />
           &nbsp; 退出系统
         </Menu.Item>
       </Menu>
@@ -70,4 +82,4 @@ const Navbar: NextPage = () => {
   );
 };
 
-export default Navbar;
+export default observer(Navbar);

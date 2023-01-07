@@ -1,5 +1,6 @@
 import { message } from 'antd';
 import CountDown from 'components/CountDown';
+import { observer } from 'mobx-react-lite';
 import { ChangeEvent, useState } from 'react';
 import request from 'service/fetch';
 import { useStore } from 'store';
@@ -24,7 +25,6 @@ const Login = (props: IProps) => {
 
   const handleClose = () => {};
   const handleGetVerifyCode = () => {
-    // setIsShowVerifyCode(true);
     if (!form.phone) {
       message.warning('请输入手机号');
       return;
@@ -123,4 +123,4 @@ const Login = (props: IProps) => {
   ) : null;
 };
 
-export default Login;
+export default observer(Login);
