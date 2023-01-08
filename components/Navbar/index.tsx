@@ -1,5 +1,5 @@
 import { HomeOutlined, LoginOutlined } from '@ant-design/icons';
-import { Avatar, Button, Dropdown, Menu } from 'antd';
+import { Avatar, Button, Dropdown, Menu, message } from 'antd';
 import Login from 'components/Login';
 import { observer } from 'mobx-react-lite';
 import type { NextPage } from 'next';
@@ -16,7 +16,13 @@ const Navbar: NextPage = () => {
   const { userId, avatar } = store.user.userInfo;
   const { pathname, push } = useRouter();
   const [isShowLogin, setIsShowLogin] = useState(false);
-  const handleGotoEditorPage = () => {};
+  const handleGotoEditorPage = () => {
+    if (userId) {
+      push('/editor/new');
+    } else {
+      message.warning('请先登录');
+    }
+  };
   const handleLogin = () => {
     setIsShowLogin(true);
   };
